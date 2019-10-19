@@ -1,0 +1,23 @@
+{
+  "name": "movies-api",
+  "version": "1.0.0",
+  "description": "Api for platziVideo",
+  "main": "index.js",
+  "scripts": {
+    "dev": "DEBUG=app:* nodemon index",
+    "start": "NODE_ENV=production node index"
+  },
+  "author": "behagoras",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "multer": "^1.4.2"
+  },
+  "devDependencies": {
+    "eslint": "^6.5.1",
+    "eslint-plugin-node": "^10.0.0",
+    "nodemon": "^1.19.4"
+  }
+}

@@ -13,8 +13,7 @@ function moviesApi(app) {
     const { tags } = req.query;
     try {
       const movies = await moviesService.getMovies({ tags });
-      throw new Error('error getting movies');
-
+      // throw new Error('error getting movies'); // Forcing error
       res.status(200).json({
         data: movies,
         message: 'movies listed',
@@ -50,7 +49,7 @@ function moviesApi(app) {
   router.put('/:movieId', async (req, res, next) => {
     const { body: movie } = req;
     const { movieId } = req.params;
-    const data = { 'data': movie };
+    // const data = { 'data': movie };
 
     try {
       const updatedMovieId = await moviesService.updateMovie({ movieId, movie });
@@ -64,7 +63,7 @@ function moviesApi(app) {
   });
   router.delete('/:movieId', async (req, res, next) => {
     const { movieId } = req.params;
-    console.log('deleting', movieId);
+    console.log('deleting', movieId); // eslint-disable-line no-console
     const data = { '_id': movieId };
     try {
       const deletedMovieId = await moviesService.deleteMovie({ data });

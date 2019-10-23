@@ -24,12 +24,15 @@ class MoviesService {
   }
 
   async updateMovie({ movieId, movie } = {}) {
-    this.updatedMovieId = await this.mongoDb.update(this.collection, movieId, movie);
+    console.log('movieId', movieId);
+    console.log('movie', movie);
+    const data = { 'data': movie };
+    this.updatedMovieId = await this.mongoDb.update(this.collection, movieId, data);
     return this.updatedMovieId;
   }
 
-  async deleteMovie() {
-    this.deletedMovieId = await Promise.resolve(moviesMock[0].id);
+  async deleteMovie({ movieId }) {
+    this.deletedMovieId = await this.mongoDb.delete(this.collection, movieId);
     return this.deletedMovieId;
   }
 

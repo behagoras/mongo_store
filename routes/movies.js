@@ -1,7 +1,7 @@
 const express = require('express');
 const { MoviesService } = require('../services/movies');
 
-const { moviesMock } = require('../utils/mocks/movies');
+// const { moviesMock } = require('../utils/mocks/movies');
 
 function moviesApi(app) {
   const router = express.Router();
@@ -13,6 +13,7 @@ function moviesApi(app) {
     const { tags } = req.query;
     try {
       const movies = await moviesService.getMovies({ tags });
+      // throw new Error('error getting movies'); // Forcing error
       res.status(200).json({
         data: movies,
         message: 'movies listed',
@@ -24,9 +25,9 @@ function moviesApi(app) {
   router.get('/:movieId', async (req, res, next) => {
     const { movieId } = req.params;
     try {
-      const movies = await moviesService.getMovie(movieId);
+      const movie = await moviesService.getMovie({ movieId });
       res.status(200).json({
-        data: movies,
+        data: movie,
         message: 'movie retrieved',
       });
     } catch (error) {
@@ -48,6 +49,7 @@ function moviesApi(app) {
   router.put('/:movieId', async (req, res, next) => {
     const { body: movie } = req;
     const { movieId } = req.params;
+    // const data = { 'data': movie };
 
     try {
       const updatedMovieId = await moviesService.updateMovie({ movieId, movie });
@@ -61,12 +63,13 @@ function moviesApi(app) {
   });
   router.delete('/:movieId', async (req, res, next) => {
     const { movieId } = req.params;
-
+    console.log('deleting', movieId); // eslint-disable-line no-console
+    const data = { '_id': movieId };
     try {
-      const deletedMovieId = await moviesService.deleteMovie({ movieId });
+      const deletedMovieId = await moviesService.deleteMovie({ data });
       res.status(200).json({
-        data: deletedMovieId,
-        message: 'movie deleted',
+        data: movieId,
+        message: (deletedMovieId ? 'movie deleted' : 'movie does not exists'),
       });
     } catch (error) {
       next(error);
